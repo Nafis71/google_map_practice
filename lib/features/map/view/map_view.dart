@@ -30,12 +30,12 @@ class _MapViewState extends State<MapView> {
       ),
       body: Consumer<LocationViewModel>(builder: (_, locationController, __) {
         if (locationController.currentLocation == null) {
-          return const Center(
-            child: AnimationLoader(
-              assetName: AppAssets.gpsAnimation,
-              boxFit: BoxFit.contain,
-            ),
-          );
+          // return const Center(
+          //   child: AnimationLoader(
+          //     assetName: AppAssets.gpsAnimation,
+          //     boxFit: BoxFit.contain,
+          //   ),
+          // );
         }
         return GoogleMap(
           mapType: MapType.normal,
