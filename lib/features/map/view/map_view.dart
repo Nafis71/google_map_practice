@@ -27,9 +27,15 @@ class _MapViewState extends State<MapView> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text("Google Map"),
+        title: const Text(
+          "Google Map",
+          style: TextStyle(
+            fontSize: 22,
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         backgroundColor: Colors.blue.shade400,
-        foregroundColor: Colors.white,
       ),
       body: Consumer<LocationViewModel>(
         builder: (_, locationController, __) {
@@ -63,13 +69,12 @@ class _MapViewState extends State<MapView> {
             },
             polylines: {
               Polyline(
-                polylineId: const PolylineId("navigation"),
-                points: locationController.listOfLocations,
-                color: Colors.blue.shade300,
-                width: 5,
-                jointType: JointType.round,
-                geodesic: true
-              ),
+                  polylineId: const PolylineId("navigation"),
+                  points: locationController.listOfLocations,
+                  color: Colors.blue.shade300,
+                  width: 5,
+                  jointType: JointType.round,
+                  geodesic: true),
             },
           );
         },
