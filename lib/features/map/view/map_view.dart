@@ -15,6 +15,7 @@ class MapView extends StatefulWidget {
 
 class _MapViewState extends State<MapView> {
   late GoogleMapController _googleMapController;
+
   @override
   void initState() {
     super.initState();
@@ -30,45 +31,49 @@ class _MapViewState extends State<MapView> {
         backgroundColor: Colors.blue.shade400,
         foregroundColor: Colors.white,
       ),
-      body: Consumer<LocationViewModel>(builder: (_, locationController, __) {
-        if (locationController.currentLocation == null) {
-          return const Center(
-            child: AnimationLoader(
-              assetName: AppAssets.gpsAnimation,
-              boxFit: BoxFit.contain,
-            ),
-          );
-        }
-        return GoogleMap(
-          mapType: MapType.normal,
-          initialCameraPosition: const CameraPosition(
-            target: LatLng(24.667710, 78.070819),
-            zoom: 0,
-          ),
-          trafficEnabled: false,
-          onMapCreated: (GoogleMapController controller) async{
-            _googleMapController = controller;
-            locationController.navigateToCurrentLocation(
-              googleMapController: _googleMapController,
-              delayMarkerPosition: true,
+      body: Consumer<LocationViewModel>(
+        builder: (_, locationController, __) {
+          if (locationController.currentLocation == null) {
+            return const Center(
+              child: AnimationLoader(
+                assetName: AppAssets.gpsAnimation,
+                boxFit: BoxFit.contain,
+              ),
             );
-            await Future.delayed(const Duration(seconds: 3));
-            locationController.startLocationStream(_googleMapController);
-          },
-          markers: {
-            if (locationController.currentLocationMarker != null)
-              locationController.currentLocationMarker!,
-          },
-          polylines: {
-            Polyline(polylineId: const PolylineId("navigation"),
-            points: locationController.listOfLocations,
-              color: Colors.blue.shade300
-            ),
           }
-        );
-      }),
+          return GoogleMap(
+            mapType: MapType.normal,
+            initialCameraPosition: const CameraPosition(
+              target: LatLng(24.667710, 78.070819),
+              zoom: 0,
+            ),
+            trafficEnabled: false,
+            onMapCreated: (GoogleMapController controller) async {
+              _googleMapController = controller;
+              locationController.navigateToCurrentLocation(
+                googleMapController: _googleMapController,
+                delayMarkerPosition: true,
+              );
+              await Future.delayed(const Duration(seconds: 3));
+              locationController.startLocationStream(_googleMapController);
+            },
+            markers: {
+              if (locationController.currentLocationMarker != null)
+                locationController.currentLocationMarker!
+            },
+            polylines: {
+              Polyline(
+                polylineId: const PolylineId("navigation"),
+                points: locationController.listOfLocations,
+                color: Colors.blue.shade300,
+              ),
+            },
+          );
+        },
+      ),
     );
   }
+
   @override
   void dispose() {
     _googleMapController.dispose();

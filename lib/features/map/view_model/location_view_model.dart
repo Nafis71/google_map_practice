@@ -64,8 +64,7 @@ class LocationViewModel extends ChangeNotifier {
         position: _currentLocation!,
         icon: BitmapDescriptor.defaultMarker,
         infoWindow: InfoWindow(
-            title: "My Current Location",
-            snippet: currentLocation.toString()));
+            title: "My Current Location", snippet: currentLocation.toString()));
     notifyListeners();
   }
 
