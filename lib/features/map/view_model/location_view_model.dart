@@ -28,8 +28,9 @@ class LocationViewModel extends ChangeNotifier {
     Geolocator.getPositionStream(
       locationSettings: const LocationSettings(
         accuracy: LocationAccuracy.bestForNavigation,
-        distanceFilter: 5,
-        timeLimit: Duration(seconds: 10),
+        timeLimit: Duration(
+          seconds: 10,
+        ),
       ),
     ).listen(
       (position) {
