@@ -19,6 +19,7 @@ class _MapViewState extends State<MapView> {
   @override
   void initState() {
     super.initState();
+    context.read<LocationViewModel>().loadCurrentLocation();
   }
 
   @override
@@ -30,12 +31,12 @@ class _MapViewState extends State<MapView> {
       ),
       body: Consumer<LocationViewModel>(builder: (_, locationController, __) {
         if (locationController.currentLocation == null) {
-          // return const Center(
-          //   child: AnimationLoader(
-          //     assetName: AppAssets.gpsAnimation,
-          //     boxFit: BoxFit.contain,
-          //   ),
-          // );
+          return const Center(
+            child: AnimationLoader(
+              assetName: AppAssets.gpsAnimation,
+              boxFit: BoxFit.contain,
+            ),
+          );
         }
         return GoogleMap(
           mapType: MapType.normal,
@@ -46,13 +47,14 @@ class _MapViewState extends State<MapView> {
           trafficEnabled: false,
           onMapCreated: (GoogleMapController controller) {
             _googleMapController = controller;
+            locationController.navigateToCurrentLocation(_googleMapController);
           },
           markers: {
-            // Marker(
-            //   markerId: const MarkerId("current_location"),
-            //   icon: BitmapDescriptor.defaultMarker,
-            //   position: currentLocation ?? const LatLng(24.667710, 78.070819)
-            // ),
+            if(locationController.currentLocationMarker != null) Marker(
+              markerId: const MarkerId("current_location"),
+              icon: BitmapDescriptor.defaultMarker,
+              position: locationController.currentLocation!
+            ),
           },
         );
       }),

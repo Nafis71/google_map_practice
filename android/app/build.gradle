@@ -5,6 +5,8 @@ plugins {
     id "dev.flutter.flutter-gradle-plugin"
 }
 
+def mapsApiKey = project.hasProperty('MAPS_API_KEY') ? MAPS_API_KEY : ""
+
 android {
     namespace = "com.example.google_map_practice"
     compileSdk = flutter.compileSdkVersion
