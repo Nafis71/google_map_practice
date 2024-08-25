@@ -66,6 +66,9 @@ class _MapViewState extends State<MapView> {
                 polylineId: const PolylineId("navigation"),
                 points: locationController.listOfLocations,
                 color: Colors.blue.shade300,
+                width: 5,
+                jointType: JointType.round,
+                geodesic: true
               ),
             },
           );
