@@ -26,10 +26,12 @@ class LocationViewModel extends ChangeNotifier {
 
   void startLocationStream(GoogleMapController googleMapController) {
     Geolocator.getPositionStream(
-            locationSettings: const LocationSettings(
-                accuracy: LocationAccuracy.best,
-                timeLimit: Duration(seconds: 10)))
-        .listen(
+      locationSettings: const LocationSettings(
+        accuracy: LocationAccuracy.bestForNavigation,
+        distanceFilter: 5,
+        timeLimit: Duration(seconds: 10),
+      ),
+    ).listen(
       (position) {
         _currentLocation = LatLng(position.latitude, position.longitude);
         listOfLocations.add(_currentLocation!);
