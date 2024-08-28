@@ -7,15 +7,17 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 class LocationViewModel extends ChangeNotifier {
   LatLng? _currentLocation;
   double _mapZoom = 16;
+  double _currentSpeed = 0;
+  List<LatLng> listOfLocations = [];
+  Marker? _currentLocationMarker;
 
   LatLng? get currentLocation => _currentLocation;
 
-  Marker? _currentLocationMarker;
-
   Marker? get currentLocationMarker => _currentLocationMarker;
-  List<LatLng> listOfLocations = [];
 
-  set setMapZoom(double zoom){
+  double get currentSpeed => _currentSpeed;
+
+  set setMapZoom(double zoom) {
     _mapZoom = zoom;
   }
 
@@ -45,13 +47,14 @@ class LocationViewModel extends ChangeNotifier {
         (position) {
           _currentLocation = LatLng(position.latitude, position.longitude);
           listOfLocations.add(_currentLocation!);
+          _currentSpeed = (position.speed * 3600)/1000;
           navigateToCurrentLocation(
             googleMapController: googleMapController,
             delayMarkerPosition: false,
           );
         },
       ).onError((handleError) async {
-        if(!await Geolocator.isLocationServiceEnabled()){
+        if (!await Geolocator.isLocationServiceEnabled()) {
           await Geolocator.openLocationSettings();
         }
         startLocationStream(googleMapController);
@@ -67,7 +70,7 @@ class LocationViewModel extends ChangeNotifier {
     required GoogleMapController googleMapController,
     required delayMarkerPosition,
   }) async {
-    if (delayMarkerPosition){
+    if (delayMarkerPosition) {
       await Future.delayed(const Duration(seconds: 2));
       _mapZoom = 16;
     }
@@ -87,10 +90,10 @@ class LocationViewModel extends ChangeNotifier {
           "currentLocation",
         ),
         position: _currentLocation!,
-        icon: await BitmapDescriptor.asset(const ImageConfiguration(
-          size: Size(40, 40),
-          devicePixelRatio: 1
-        ),AppAssets.customMapMarker, ),
+        icon: await BitmapDescriptor.asset(
+          const ImageConfiguration(size: Size(40, 40), devicePixelRatio: 1),
+          AppAssets.customMapMarker,
+        ),
         infoWindow: InfoWindow(
             title: "My Current Location", snippet: currentLocation.toString()));
     notifyListeners();
