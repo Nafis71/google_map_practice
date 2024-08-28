@@ -10,6 +10,7 @@ class LocationViewModel extends ChangeNotifier {
   double _currentSpeed = 0;
   List<LatLng> listOfLocations = [];
   Marker? _currentLocationMarker;
+  late GoogleMapController _googleMapController;
 
   LatLng? get currentLocation => _currentLocation;
 
@@ -47,7 +48,7 @@ class LocationViewModel extends ChangeNotifier {
         (position) {
           _currentLocation = LatLng(position.latitude, position.longitude);
           listOfLocations.add(_currentLocation!);
-          _currentSpeed = (position.speed * 3600)/1000;
+          _currentSpeed = (position.speed * 3600) / 1000;
           navigateToCurrentLocation(
             googleMapController: googleMapController,
             delayMarkerPosition: false,
@@ -67,14 +68,15 @@ class LocationViewModel extends ChangeNotifier {
   }
 
   Future<void> navigateToCurrentLocation({
-    required GoogleMapController googleMapController,
+    GoogleMapController? googleMapController,
     required delayMarkerPosition,
   }) async {
     if (delayMarkerPosition) {
+      _googleMapController = googleMapController!;
       await Future.delayed(const Duration(seconds: 2));
       _mapZoom = 16;
     }
-    googleMapController.animateCamera(
+    _googleMapController.animateCamera(
       CameraUpdate.newCameraPosition(
         CameraPosition(
           target: _currentLocation!,
@@ -86,16 +88,19 @@ class LocationViewModel extends ChangeNotifier {
       await Future.delayed(const Duration(milliseconds: 900));
     }
     _currentLocationMarker = Marker(
-        markerId: const MarkerId(
-          "currentLocation",
-        ),
-        position: _currentLocation!,
-        icon: await BitmapDescriptor.asset(
-          const ImageConfiguration(size: Size(40, 40), devicePixelRatio: 1),
-          AppAssets.customMapMarker,
-        ),
-        infoWindow: InfoWindow(
-            title: "My Current Location", snippet: currentLocation.toString()));
+      markerId: const MarkerId(
+        "currentLocation",
+      ),
+      position: _currentLocation!,
+      icon: await BitmapDescriptor.asset(
+        const ImageConfiguration(size: Size(40, 40), devicePixelRatio: 1),
+        AppAssets.customMapMarker,
+      ),
+      infoWindow: InfoWindow(
+        title: "My Current Location",
+        snippet: currentLocation.toString(),
+      ),
+    );
     notifyListeners();
   }
 
