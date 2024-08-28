@@ -24,24 +24,34 @@ class LocationViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void startLocationStream(GoogleMapController googleMapController) {
-    Geolocator.getPositionStream(
-      locationSettings: const LocationSettings(
-        accuracy: LocationAccuracy.bestForNavigation,
-        timeLimit: Duration(
-          seconds: 10,
+  Future<void> startLocationStream(
+      GoogleMapController googleMapController) async {
+    try {
+      Geolocator.getPositionStream(
+        locationSettings: const LocationSettings(
+          accuracy: LocationAccuracy.bestForNavigation,
+          timeLimit: Duration(
+            seconds: 10,
+          ),
         ),
-      ),
-    ).listen(
-      (position) {
-        _currentLocation = LatLng(position.latitude, position.longitude);
-        listOfLocations.add(_currentLocation!);
-        navigateToCurrentLocation(
-          googleMapController: googleMapController,
-          delayMarkerPosition: false,
-        );
-      },
-    );
+      ).listen(
+        (position) {
+          _currentLocation = LatLng(position.latitude, position.longitude);
+          listOfLocations.add(_currentLocation!);
+          navigateToCurrentLocation(
+            googleMapController: googleMapController,
+            delayMarkerPosition: false,
+          );
+        },
+      ).onError((handleError) async {
+        await Geolocator.openLocationSettings();
+        startLocationStream(googleMapController);
+      });
+    } catch (exception) {
+      if (kDebugMode) {
+        debugPrint(exception.toString());
+      }
+    }
   }
 
   Future<void> navigateToCurrentLocation({
