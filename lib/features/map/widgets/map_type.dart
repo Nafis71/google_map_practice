@@ -116,37 +116,4 @@ class MapTypeSelector extends StatelessWidget {
       ),
     );
   }
-
-  DecorationImage? getImageDecoration(bool isMapTypeSelected) {
-    if (isMapTypeSelected) {
-      return null;
-    }
-    if (locationViewModel.mapType == MapType.normal) {
-      return const DecorationImage(
-        image: AssetImage(AppAssets.normalMap),
-        fit: BoxFit.cover,
-      );
-    }
-    if (locationViewModel.mapType == MapType.satellite) {
-      return const DecorationImage(
-        image: AssetImage(AppAssets.satelliteMap),
-        fit: BoxFit.cover,
-      );
-    }
-    return null;
-  }
-
-  // Widget getMapTypeText(){
-  //   if (locationViewModel.mapType == MapType.normal) {
-  //     return Text("Default",style: TextStyle(
-  //       color: B
-  //     ),);
-  //   }
-  //   if (locationViewModel.mapType == MapType.satellite) {
-  //     return const DecorationImage(
-  //       image: AssetImage(AppAssets.satelliteMap),
-  //       fit: BoxFit.cover,
-  //     );
-  //   }
-  // }
 }
