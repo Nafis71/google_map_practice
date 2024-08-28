@@ -53,9 +53,10 @@ class LocationViewModel extends ChangeNotifier {
             if (_previousLocation!.latitude == _currentLocation!.latitude &&
                 _previousLocation!.longitude == _currentLocation!.longitude) {
               _currentSpeed = 0.00;
-            }
-            else{
-              _currentSpeed = (position.speed * 3600)/1000;
+              notifyListeners();
+              return;
+            } else {
+              _currentSpeed = (position.speed * 3600) / 1000;
             }
           }
           _previousLocation = _currentLocation;
@@ -99,6 +100,11 @@ class LocationViewModel extends ChangeNotifier {
         const Duration(milliseconds: 900),
       );
     }
+    await updateLocationMarker();
+    notifyListeners();
+  }
+
+  Future<void> updateLocationMarker() async {
     _currentLocationMarker = Marker(
       markerId: const MarkerId(
         "currentLocation",
@@ -113,14 +119,13 @@ class LocationViewModel extends ChangeNotifier {
         snippet: currentLocation.toString(),
       ),
     );
-    notifyListeners();
   }
 
-  void zoomIn(){
+  void zoomIn() {
     _googleMapController.animateCamera(CameraUpdate.zoomIn());
   }
 
-  void zoomOut(){
+  void zoomOut() {
     _googleMapController.animateCamera(CameraUpdate.zoomOut());
   }
 
