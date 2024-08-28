@@ -53,6 +53,9 @@ class _MapViewState extends State<MapView> {
               target: LatLng(24.667710, 78.070819),
               zoom: 0,
             ),
+            onCameraMove: (CameraPosition cameraPosition){
+              locationController.setMapZoom = cameraPosition.zoom;
+            },
             trafficEnabled: false,
             onMapCreated: (GoogleMapController controller) async {
               _googleMapController = controller;
@@ -76,6 +79,8 @@ class _MapViewState extends State<MapView> {
                   jointType: JointType.round,
                   geodesic: true),
             },
+            myLocationEnabled: false,
+            myLocationButtonEnabled: true,
           );
         },
       ),
