@@ -23,31 +23,32 @@ class LocationViewModel extends ChangeNotifier {
   double get currentSpeed => _currentSpeed;
 
   bool get isMapTypeSelected => _isMapTypeSelected;
+
   bool get showTraffic => _showTraffic;
+
   MapType get mapType => _mapType;
 
   set setMapZoom(double zoom) {
     _mapZoom = zoom;
   }
 
-  set setMapType(MapType mapType){
+  set setMapType(MapType mapType) {
     _mapType = mapType;
   }
 
-  void toggleTrafficMode(){
+  void toggleTrafficMode() {
     _showTraffic = !_showTraffic;
   }
 
-  void toggleMapTypeSelected(){
+  void toggleMapTypeSelected() {
     _isMapTypeSelected = !_isMapTypeSelected;
     notifyListeners();
   }
 
-  void disableMapSelection(){
+  void disableMapSelection() {
     _isMapTypeSelected = false;
     notifyListeners();
   }
-
 
   Future<void> loadCurrentLocation() async {
     await checkLocationPermission();
