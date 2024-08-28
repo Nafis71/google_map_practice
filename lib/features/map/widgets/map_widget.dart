@@ -32,7 +32,7 @@ class _MapWidgetState extends State<MapWidget> {
       onTap: (position){
         widget.locationViewModel.disableMapSelection();
       },
-      trafficEnabled: false,
+      trafficEnabled: widget.locationViewModel.showTraffic,
       onMapCreated: (GoogleMapController controller) async {
         _googleMapController = controller;
         widget.locationViewModel.navigateToCurrentLocation(

@@ -20,7 +20,7 @@ class MapTypeSelector extends StatelessWidget {
           locationViewModel.toggleMapTypeSelected();
         },
         child: AnimatedContainer(
-          width: (!locationViewModel.isMapTypeSelected) ? 60 : 200,
+          width: (!locationViewModel.isMapTypeSelected) ? 60 : 230,
           height: (!locationViewModel.isMapTypeSelected) ? 60 : 100,
           duration: const Duration(milliseconds: 400),
           alignment: Alignment.center,
@@ -77,6 +77,15 @@ class MapTypeSelector extends StatelessWidget {
               child: terrainOption(
                   mapTypeName: "Satellite", mapImage: AppAssets.satelliteMap),
             ),
+            InkWell(
+              splashColor: Colors.transparent,
+              onTap: () {
+                locationViewModel.toggleTrafficMode();
+                locationViewModel.toggleMapTypeSelected();
+              },
+              child: terrainOption(
+                  mapTypeName: "Traffic", mapImage: AppAssets.trafficMap),
+            ),
           ],
         )
       ],
@@ -98,10 +107,11 @@ class MapTypeSelector extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-            width: 50,
-            height: 50,
+            width: 60,
+            height: 60,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
+              border: Border.fromBorderSide(getContainerBorder(mapTypeName)),
               image: DecorationImage(
                 image: AssetImage(mapImage),
                 fit: BoxFit.cover,
@@ -115,5 +125,17 @@ class MapTypeSelector extends StatelessWidget {
         ],
       ),
     );
+  }
+  BorderSide getContainerBorder (String mapTypeName){
+    if(mapTypeName == "Default" && locationViewModel.mapType == MapType.normal){
+      return const BorderSide(color: Colors.blue,width: 2);
+    }
+    if(mapTypeName == "Satellite" && locationViewModel.mapType == MapType.satellite){
+      return const BorderSide(color: Colors.blue,width: 2);
+    }
+    if(mapTypeName == "Traffic" && locationViewModel.showTraffic){
+      return const BorderSide(color: Colors.blue,width: 2);
+    }
+    return const BorderSide(color: Colors.white);
   }
 }

@@ -37,7 +37,7 @@ class _MapViewState extends State<MapView> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        backgroundColor: Colors.blue.shade400,
+        backgroundColor: Color(0xFF4770A2),
       ),
       body: Consumer<LocationViewModel>(
         builder: (_, locationViewModel, __) {

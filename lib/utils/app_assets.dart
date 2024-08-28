@@ -5,4 +5,5 @@ class AppAssets {
   static const customMapMarker = "$imageBasePath/map_marker.png";
   static const normalMap = "$imageBasePath/normalMap.jpg";
   static const satelliteMap = "$imageBasePath/satelliteMap.jpeg";
+  static const trafficMap = "$imageBasePath/trafficMap.png";
 }

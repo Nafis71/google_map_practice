@@ -17,6 +17,7 @@ class GoogleMap extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: "Google Map",
         home: const MapView(),
         locale: DevicePreview.locale(context),

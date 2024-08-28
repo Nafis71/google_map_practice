@@ -14,6 +14,7 @@ class LocationViewModel extends ChangeNotifier {
   Marker? _currentLocationMarker;
   late GoogleMapController _googleMapController;
   bool _isMapTypeSelected = false;
+  bool _showTraffic = false;
 
   LatLng? get currentLocation => _currentLocation;
 
@@ -22,6 +23,7 @@ class LocationViewModel extends ChangeNotifier {
   double get currentSpeed => _currentSpeed;
 
   bool get isMapTypeSelected => _isMapTypeSelected;
+  bool get showTraffic => _showTraffic;
   MapType get mapType => _mapType;
 
   set setMapZoom(double zoom) {
@@ -30,6 +32,10 @@ class LocationViewModel extends ChangeNotifier {
 
   set setMapType(MapType mapType){
     _mapType = mapType;
+  }
+
+  void toggleTrafficMode(){
+    _showTraffic = !_showTraffic;
   }
 
   void toggleMapTypeSelected(){
