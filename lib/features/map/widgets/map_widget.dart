@@ -21,13 +21,16 @@ class _MapWidgetState extends State<MapWidget> {
   Widget build(BuildContext context) {
     return GoogleMap(
       zoomControlsEnabled: false,
-      mapType: MapType.normal,
+      mapType: widget.locationViewModel.mapType,
       initialCameraPosition: const CameraPosition(
         target: LatLng(24.667710, 78.070819),
         zoom: 0,
       ),
       onCameraMove: (CameraPosition cameraPosition) {
         widget.locationViewModel.setMapZoom = cameraPosition.zoom;
+      },
+      onTap: (position){
+        widget.locationViewModel.disableMapSelection();
       },
       trafficEnabled: false,
       onMapCreated: (GoogleMapController controller) async {

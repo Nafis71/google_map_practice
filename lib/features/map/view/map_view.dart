@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_map_practice/features/map/widgets/current_location_finder.dart';
 import 'package:google_map_practice/features/map/widgets/footer_widget.dart';
+import 'package:google_map_practice/features/map/widgets/map_type.dart';
 import 'package:google_map_practice/features/map/widgets/map_widget.dart';
 import 'package:google_map_practice/features/map/widgets/map_zoomer.dart';
 import 'package:google_map_practice/utils/app_assets.dart';
@@ -53,6 +54,7 @@ class _MapViewState extends State<MapView> {
               MapWidget(
                 locationViewModel: locationViewModel,
               ),
+              MapTypeSelector(locationViewModel: locationViewModel),
               MapZoomer(locationViewModel: locationViewModel),
               CurrentLocationFinder(locationViewModel: locationViewModel),
               FooterWidget(locationViewModel: locationViewModel),

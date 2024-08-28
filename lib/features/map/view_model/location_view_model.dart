@@ -10,8 +10,10 @@ class LocationViewModel extends ChangeNotifier {
   double _mapZoom = 16;
   double _currentSpeed = 0;
   List<LatLng> listOfLocations = [];
+  MapType _mapType = MapType.normal;
   Marker? _currentLocationMarker;
   late GoogleMapController _googleMapController;
+  bool _isMapTypeSelected = false;
 
   LatLng? get currentLocation => _currentLocation;
 
@@ -19,9 +21,27 @@ class LocationViewModel extends ChangeNotifier {
 
   double get currentSpeed => _currentSpeed;
 
+  bool get isMapTypeSelected => _isMapTypeSelected;
+  MapType get mapType => _mapType;
+
   set setMapZoom(double zoom) {
     _mapZoom = zoom;
   }
+
+  set setMapType(MapType mapType){
+    _mapType = mapType;
+  }
+
+  void toggleMapTypeSelected(){
+    _isMapTypeSelected = !_isMapTypeSelected;
+    notifyListeners();
+  }
+
+  void disableMapSelection(){
+    _isMapTypeSelected = false;
+    notifyListeners();
+  }
+
 
   Future<void> loadCurrentLocation() async {
     await checkLocationPermission();
