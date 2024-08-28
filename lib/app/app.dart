@@ -1,3 +1,4 @@
+import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:google_map_practice/features/map/view/map_view.dart';
 import 'package:provider/provider.dart';
@@ -15,9 +16,11 @@ class GoogleMap extends StatelessWidget {
           create: (context) => LocationViewModel(),
         ),
       ],
-      child: const MaterialApp(
+      child: MaterialApp(
         title: "Google Map",
-        home: MapView(),
+        home: const MapView(),
+        locale: DevicePreview.locale(context),
+        builder: DevicePreview.appBuilder,
       ),
     );
   }

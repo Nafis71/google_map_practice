@@ -53,8 +53,9 @@ class LocationViewModel extends ChangeNotifier {
             if (_previousLocation!.latitude == _currentLocation!.latitude &&
                 _previousLocation!.longitude == _currentLocation!.longitude) {
               _currentSpeed = 0.00;
-            } else {
-              _currentSpeed = (position.speed * 3600) / 1000;
+            }
+            else{
+              _currentSpeed = (position.speed * 3600)/1000;
             }
           }
           _previousLocation = _currentLocation;
@@ -113,6 +114,14 @@ class LocationViewModel extends ChangeNotifier {
       ),
     );
     notifyListeners();
+  }
+
+  void zoomIn(){
+    _googleMapController.animateCamera(CameraUpdate.zoomIn());
+  }
+
+  void zoomOut(){
+    _googleMapController.animateCamera(CameraUpdate.zoomOut());
   }
 
   Future<void> checkLocationPermission() async {
