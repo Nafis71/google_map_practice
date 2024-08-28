@@ -1,4 +1,3 @@
-#This project is done by nafis hasan tonmoy
 # Notice for API
 
 > This app loads api key from android's local.properties file so that the google map api doesn't get exposed.
