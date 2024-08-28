@@ -26,12 +26,12 @@ class FooterWidget extends StatelessWidget {
           children: [
             const Text(
               "Your current speed",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
             ),
             Text(
               "${locationViewModel.currentSpeed.toStringAsFixed(2)} Km/h",
               style: const TextStyle(
-                fontSize: 14,
+                fontSize: 22,
                 fontWeight: FontWeight.bold,
                 color: Colors.blue,
               ),
