@@ -28,7 +28,7 @@ class _MapViewState extends State<MapView> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text(
-          "Google Map",
+          "Real Time Location Tracker",
           style: TextStyle(
             fontSize: 22,
             color: Colors.white,
