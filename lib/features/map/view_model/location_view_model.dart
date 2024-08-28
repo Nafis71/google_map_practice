@@ -6,6 +6,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class LocationViewModel extends ChangeNotifier {
   LatLng? _currentLocation;
+  LatLng? _previousLocation;
   double _mapZoom = 16;
   double _currentSpeed = 0;
   List<LatLng> listOfLocations = [];
@@ -48,7 +49,15 @@ class LocationViewModel extends ChangeNotifier {
         (position) {
           _currentLocation = LatLng(position.latitude, position.longitude);
           listOfLocations.add(_currentLocation!);
-          _currentSpeed = (position.speed * 3600) / 1000;
+          if (_previousLocation != null) {
+            if (_previousLocation!.latitude == _currentLocation!.latitude &&
+                _previousLocation!.longitude == _currentLocation!.longitude) {
+              _currentSpeed = 0.00;
+            } else {
+              _currentSpeed = (position.speed * 3600) / 1000;
+            }
+          }
+          _previousLocation = _currentLocation;
           navigateToCurrentLocation(
             googleMapController: googleMapController,
             delayMarkerPosition: false,
@@ -85,7 +94,9 @@ class LocationViewModel extends ChangeNotifier {
       ),
     );
     if (delayMarkerPosition) {
-      await Future.delayed(const Duration(milliseconds: 900));
+      await Future.delayed(
+        const Duration(milliseconds: 900),
+      );
     }
     _currentLocationMarker = Marker(
       markerId: const MarkerId(
