@@ -1,6 +1,6 @@
 # Notice for API
 
-> This app loads api key from android's local.properties file so that the google map api doesn't get exposed.
+> In order to prevent the Google Map API from being public, this app loads the api key from the local.properties file on Android.
 
 
 1. Run pub get to generate local.properties
