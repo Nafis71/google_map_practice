@@ -8,7 +8,7 @@
 flutter pub get
 ```
 Go to android/local.properties <br />
-2. Add this key inside the local.properties
+2. Add map key inside the local.properties
 ```
 MAPS_API_KEY=addApiKey
 ```
