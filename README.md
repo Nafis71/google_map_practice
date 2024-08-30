@@ -1,4 +1,4 @@
-# Notice for API
+# Notice for API Setup
 
 > In order to prevent the Google Map API from being public, this app loads the api key from the local.properties file on Android.
 
